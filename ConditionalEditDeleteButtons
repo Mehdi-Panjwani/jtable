@@ -1,0 +1,31 @@
+Hi,
+
+I was developing a web app in MVC asp.net and I wanted to show/hide buttons based on a user's priveleges. The buttons access/priveleges for users are defined in a database table.
+
+As per HIK, if we don't assign a value for createAction, it will be hidden. This is ok. However, edit and delete buttons doesn't hide and hence a fix is required.
+
+For below code, all 3 buttons sould hide
+    actions: {
+        'createAction': '',
+        'deleteAction': '',
+        'updateAction': ''
+    },
+
+
+In my opinion, the shortest possible fix is to add one condition. Change required in file jquery.jtable.js version jTable 2.4.0:
+
+in line 2535 - if updateaction is blank then no need to create empty header
+if (this.options.actions.updateAction != undefined && this.options.actions.updateAction != '')
+
+in line 2545 - if updateaction is blank then no need to create the button
+if (self.options.actions.updateAction != undefined && self.options.actions.updateAction != '')
+
+
+in line 3011 - if deleteaction is blank then no need to create empty header
+if (this.options.actions.deleteAction != undefined && this.options.actions.deleteAction != '') {
+
+in line 3022 - if deleteaction is blank then no need to create the buttons
+if (self.options.actions.deleteAction != undefined && self.options.actions.deleteAction != '') {
+
+
+Thanks.
